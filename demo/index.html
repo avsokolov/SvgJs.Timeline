@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG.JS Timeline demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            min-height: 100%;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        #drawing {
+            width: 100%;
+            height: calc(100% - 50px);
+            background: aliceblue;
+        }
+        .controls {
+            height: 50px;
+            background: azure;
+        }
+    </style>
+</head>
+<body>
+    <div id="drawing"></div>
+    <div class="controls">
+        <button onclick="play()">play</button>
+        <button onclick="pause()">pause</button>
+        <button onclick="seek(0.99)">seek 100%</button>
+        <button onclick="seek(0.5)">seek 50%</button>
+        <button onclick="seek(0)">seek 0%</button>
+    </div>
+    <script>
+        var draw = SVG('drawing');
+
+        // simple animation
+        window.rect1 = draw.rect(100, 100).move(0, 0).fill("#00f");
+        rect1.animate(10000).attr('x', 100).animate(5000).attr('y', 100).animate(5000).size(50, 50);
+
+        // one timeline to check seek
+        window.rect2 = draw.rect(100, 100).move(300, 300).fill("#0f0");
+        window.rect22 = draw.rect(100, 100).move(400, 300).fill("#0f0");
+        window.rect2Tm1 = rect2.timeline()
+            .animate(10000).attr('x', 200)
+            .animate(5000,'>').attr('y', 200)
+            .animate(5000,'<').size(50, 50)
+            .onceAll(.55, function(offset) {
+                console.log('55%', offset*100+'%');
+            })
+            .onceAll(1, function(offset) {
+                console.log('100%', offset*100+'%');
+            })
+            .onceAll(0, function(offset) {
+                console.log('0%', offset*100+'%');
+            })
+            .afterAll(function() {
+                console.log('finished');
+            })
+            .duringAll(function(pos, morph) {
+                rect22.move(morph(400, 0), morph(300, 0));
+                if (Math.round(pos*100)===55) {
+                    console.log('using duringAll 55%', pos*100+'%');
+                }
+            });
+
+
+        // multiple timelines
+        window.rect3 = draw.rect(100, 100).move(0, 300).fill("#f00");
+        rect3.timeline(10000).attr('x', 100).timeline(5000).attr('y', 200).timeline(5000).size(50, 50);
+
+
+
+        function play() {
+            rect2Tm1.play();
+        }
+
+        function pause() {
+            rect2Tm1.pause();
+        }
+
+        function seek(pos) {
+            rect2Tm1.at(pos);
+        }
+
+        var rect = draw.rect(200, 200).move(600, 200).fill("#7ef");
+
+        var tm1 = rect.timeline().animate(1000, '<').width(50).delay(500).animate(100, '<').width(200);
+        var tm2 = rect.timeline().animate(1000, '>').height(400);
+
+        //should be 1000+500+100
+        console.log(tm1.state.duration);
+
+        tm1.pause();
+        tm2.pause();
+
+        tm1.at(0.1);
+        tm2.at(0.1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "svgjs.timeline",
+  "version": "1.0.0",
+  "description": "Timeline extension for SVG.JS animations",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "watch": "webpack-dev-server --config webpack.config.js"
+  },
+  "keywords": [
+    "svg.js",
+    "animations"
+  ],
+  "author": "alexander.sokolov",
+  "license": "MIT",
+  "dependencies": {
+    "svg.js": "^2.6.3"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
