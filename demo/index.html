@@ -70,8 +70,6 @@
         window.rect3 = draw.rect(100, 100).move(0, 300).fill("#f00");
         rect3.timeline(10000).attr('x', 100).timeline(5000).attr('y', 200).timeline(5000).size(50, 50);
 
-
-
         function play() {
             rect2Tm1.play();
         }
@@ -84,19 +82,46 @@
             rect2Tm1.at(pos);
         }
 
-        var rect = draw.rect(200, 200).move(600, 200).fill("#7ef");
+        var rect = draw.rect(200, 200).move(0, 0).fill("#7ef");
 
-        var tm1 = rect.timeline().animate(1000, '<').width(50).delay(500).animate(100, '<').width(200);
-        var tm2 = rect.timeline().animate(1000, '>').height(400);
+        var tm1 = rect.timeline().animate(1000, '<').width(50).delay(500).animate(800, '<').width(200)
+            .onceAll(0.9, function(offset) {
+                console.log('tm1 - 100%', offset*100+'%');
+            });
+        var tm2 = rect.timeline().animate(1000, '>').height(400)
+            .onceAll(0.99, function(offset) {
+                console.log('tm2 - 100%', offset*100+'%');
+            });
 
         //should be 1000+500+100
         console.log(tm1.state.duration);
 
+
         tm1.pause();
         tm2.pause();
 
-        tm1.at(0.1);
-        tm2.at(0.1);
+        setTimeout(function() {
+            tm1.at(0.1);
+            tm2.at(0.1);
+
+            setTimeout(function() {
+                tm2.play();
+                tm1.play();
+            }, 500);
+        },500);
+
+        var rect55 = draw.rect(100,200).move(0,0);
+
+        window.tm55 = rect55.timeline().animate(1000, '<')
+            .width(400)
+            .onceAll(1, function(pos) {
+                alert(pos);
+            });
+
+        // setTimeout(function(){ window.tm1.at(0.99) }, 600) //WORKS WELL
+        setTimeout(function(){ tm55.at(1) }, 600);
+        setTimeout(function(){ tm55.play() }, 700);
+
     </script>
 </body>
 </html>

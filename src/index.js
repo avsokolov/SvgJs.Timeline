@@ -79,7 +79,6 @@ SVG.Timeline = SVG.invent({
         });
 
         this.afterAll(function () {
-            console.log('finished');
             instance.stop();
         })
     },
@@ -188,6 +187,10 @@ SVG.Timeline = SVG.invent({
                     } else {
                         instance._fx.situation = situation;
                         instance._fx.startCurrent();
+                        if (pos === 1) {
+                            //seek to end of timeline
+                            instance._subscribeOnceAll();
+                        }
                         instance._fx.atEnd();
                     }
                 } else {

@@ -12,7 +12,7 @@ module.exports = {
     //devtool: 'eval',
     plugins: [
         new UglifyJsPlugin({
-            //sourceMap: true
+            sourceMap: false
         }),
         new HtmlWebpackPlugin({
             template: './demo/index.html',
