@@ -71,15 +71,27 @@
         rect3.timeline(10000).attr('x', 100).timeline(5000).attr('y', 200).timeline(5000).size(50, 50);
 
         function play() {
-            rect2Tm1.play();
+            if (rect2Tm1.state) {
+                rect2Tm1.play();
+            } else {
+                alert('It\'s dead :(');
+            }
         }
 
         function pause() {
-            rect2Tm1.pause();
+            if (rect2Tm1.state) {
+                rect2Tm1.pause();
+            } else {
+                alert('It\'s dead :(');
+            }
         }
 
         function seek(pos) {
-            rect2Tm1.at(pos);
+            if (rect2Tm1.state) {
+                rect2Tm1.at(pos);
+            } else {
+                alert('It\'s dead :(');
+            }
         }
 
         var rect = draw.rect(200, 200).move(0, 0).fill("#7ef");
@@ -120,7 +132,13 @@
 
         // setTimeout(function(){ window.tm1.at(0.99) }, 600) //WORKS WELL
         setTimeout(function(){ tm55.at(1) }, 600);
-        setTimeout(function(){ tm55.play() }, 700);
+        setTimeout(function(){
+            if (tm55.state) {
+                tm55.play();
+            } else {
+                alert('It\'s dead :(');
+            }
+        }, 700);
 
     </script>
 </body>

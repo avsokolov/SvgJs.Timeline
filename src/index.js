@@ -232,6 +232,7 @@ SVG.Timeline = SVG.invent({
                 this._target.fxt.timelines.splice(indexOfCurrent, 1);
             }
             this._target = null;
+            this.state = null;
             this._onceAllCallbacks = {};
 
             return this;
