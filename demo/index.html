@@ -123,14 +123,20 @@
         },500);
 
         var rect55 = draw.rect(100,200).move(0,0);
+        var rect66 = draw.rect(100,200).move(0,220);
 
         window.tm55 = rect55.timeline().animate(1000, '<')
             .width(400)
             .onceAll(1, function(pos) {
                 alert(pos);
             });
+        window.tm66 = rect66.timeline().animate(1000, '<')
+            .width(40)
+            .onceAll(0.5, function(pos) {
+                alert('tm66: '+pos);
+            })
+            .pause();
 
-        // setTimeout(function(){ window.tm1.at(0.99) }, 600) //WORKS WELL
         setTimeout(function(){ tm55.at(1) }, 600);
         setTimeout(function(){
             if (tm55.state) {
@@ -139,6 +145,8 @@
                 alert('It\'s dead :(');
             }
         }, 700);
+
+        setTimeout(function(){ tm66.at(0.5) }, 600);
 
     </script>
 </body>

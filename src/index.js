@@ -198,6 +198,8 @@ SVG.Timeline = SVG.invent({
                 }
             });
 
+            if (!this.state) return;
+
             this._subscribeOnceAll();
             this._subscribeEvents();
             if (this._fx.situation) {
@@ -285,8 +287,8 @@ SVG.Timeline = SVG.invent({
                         if (innerPos===1) {
                             innerPos -= 0.000000001;
                         }
-                        situation.once[innerPos] = function (pos, easy) {
-                            instance._onceAllCallbacks[key](((offset-dur)+dur*easy)/duration);//add absolute (timeline) position
+                        situation.once[situation.ease(innerPos)] = function (pos) {
+                            instance._onceAllCallbacks[key](((offset-dur)+dur*pos)/duration);//add absolute (timeline) position
                         }
                     }
                 }
