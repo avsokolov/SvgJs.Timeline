@@ -294,11 +294,21 @@ SVG.Timeline = SVG.invent({
                 }
             });
         },
+        once: function(pos, fn, isEased) {
+            if (pos === 0) {
+                pos += 0.000000001;
+            } else {
+                pos -= 0.000000001;
+            }
+
+            this._fx.once(pos, fn, isEased);
+
+            return this;
+        },
         onceAll: function(pos, fn){
             if (pos===0) {
                 pos += 0.000000001;
-            }
-            if (pos===1) {
+            } else {
                 pos -= 0.000000001;
             }
 
